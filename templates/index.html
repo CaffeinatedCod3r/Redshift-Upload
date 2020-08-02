@@ -102,6 +102,11 @@
 			color: #0c3214;
 		}
 
+		.fa-cog{
+			font-size: 1.5rem;
+            color: white;
+		}
+
 		#tbl-name {
 			border: none;
 			transition: all 0.2s linear;
@@ -257,8 +262,8 @@
 				<div class="modal-body" id="json_editor"></div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" onclick="save_json_config()">Create Table and
-						Copy</button>
+					<button type="button" class="btn btn-success" onclick="save_json_config()">Save Config
+					</button>
 				</div>
 			</div>
 		</div>
@@ -273,6 +278,15 @@
 		editor.setOptions({
 			minLines: 15,
 			maxLines: 15,
+			showPrintMargin: false
+		})
+
+		var json_editor = ace.edit("json_editor")
+		json_editor.setTheme("ace/theme/sqlserver")
+		json_editor.session.setMode("ace/mode/json")
+		json_editor.setOptions({
+			minLines: 20,
+			maxLines: 20,
 			showPrintMargin: false
 		})
 
@@ -441,8 +455,7 @@
 
 
 		function save_json_config(){
-			var editor = ace.edit("json_editor")
-			var json_config = editor.getValue()
+			var json_config = json_editor.getValue()
 			$.ajax({
 				type: "POST",
 				url: "/save_json_config",
